@@ -1,0 +1,7 @@
+{
+  "name": "huecontrol",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue"
+}
