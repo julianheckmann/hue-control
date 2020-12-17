@@ -6,23 +6,60 @@
       </ion-toolbar>
     </ion-header>
 
-    <ion-content class="ion-padding">Schedule Tab</ion-content>
+    <ion-content class="ion-padding">
+      <ion-list>
+        <ion-list-header>
+          Rooms
+        </ion-list-header>
+
+        <ion-item :key="index" v-for="(room, index) of rooms">
+          <ion-label>{{ room.name }}</ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-content>
   </ion-page>
 </template>
 
 <script>
-import { defineComponent } from "vue";
+import ColorConverter from "../../services/ColorConverter.ts";
+
+import { defineComponent, ref } from "vue";
 import {
   IonContent,
   IonHeader,
   IonPage,
   IonTitle,
-  IonToolbar
+  IonToolbar,
+  IonList,
+  IonItem,
+  IonListHeader,
+  IonLabel
 } from "@ionic/vue";
 
 export default defineComponent({
   name: "Home",
-  components: { IonContent, IonHeader, IonPage, IonTitle, IonToolbar }
+
+  components: {
+    IonContent,
+    IonHeader,
+    IonPage,
+    IonTitle,
+    IonToolbar,
+    IonList,
+    IonItem,
+    IonLabel,
+    IonListHeader
+  },
+
+  setup() {
+    const rooms = ref([{ name: "test" }, { name: "test2" }]);
+
+    console.log(ColorConverter.rgbToXy(6, 255, 245));
+
+    return {
+      rooms
+    };
+  }
 });
 </script>
 

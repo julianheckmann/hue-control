@@ -4,7 +4,7 @@
       <ion-tab-bar slot="bottom">
         <ion-tab-button tab="home" href="/pages/home">
           <ion-icon :icon="home" />
-          <ion-label>home</ion-label>
+          <ion-label>Home</ion-label>
         </ion-tab-button>
 
         <ion-tab-button tab="settings" href="/pages/settings">
@@ -38,3 +38,5 @@ export default {
   }
 };
 </script>
+
+<style scoped></style>

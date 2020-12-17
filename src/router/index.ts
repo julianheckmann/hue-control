@@ -18,6 +18,34 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: "settings",
         component: () => import("@/views/pages/Settings.vue")
+      },
+      {
+        path: "/config/",
+        component: Tabs,
+        children: [
+          {
+            path: "rooms",
+            component: () => import("@/views/pages/config/Rooms.vue")
+          },
+          {
+            path: "lamps",
+            component: () => import("@/views/pages/config/Lamps.vue")
+          },
+          {
+            path: "bridge",
+            component: () => import("@/views/pages/config/Bridge.vue")
+          }
+        ]
+      },
+      {
+        path: "/app/",
+        component: Tabs,
+        children: [
+          {
+            path: "about",
+            component: () => import("@/views/pages/app/About.vue")
+          }
+        ]
       }
     ]
   }
