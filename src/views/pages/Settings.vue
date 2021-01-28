@@ -108,7 +108,7 @@ export default defineComponent({
     };
 
     const redirect = (url: string) => {
-      router.replace(url);
+      router.push(url);
     };
 
     return {

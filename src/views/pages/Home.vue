@@ -51,7 +51,9 @@ import {
   IonItem,
   IonListHeader,
   IonIcon,
-  IonToggle
+  IonToggle,
+  IonButtons,
+  IonButton
 } from "@ionic/vue";
 
 import {powerOutline} from "ionicons/icons";
@@ -70,6 +72,8 @@ export default defineComponent({
     IonListHeader,
     IonIcon,
     IonToggle,
+    IonButtons,
+    IonButton
   },
 
   setup() {
