@@ -383,3 +383,11 @@ body.dark {
 
   --ion-card-background: #1e1e1e;
 }
+
+* {
+  font-family: 'Inter', sans-serif;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

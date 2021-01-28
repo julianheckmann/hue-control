@@ -25,11 +25,14 @@ import {
   IonIcon,
   IonPage
 } from "@ionic/vue";
+
 import { home, settings } from "ionicons/icons";
 
 export default {
   name: "Tabs",
+
   components: { IonLabel, IonTabs, IonTabBar, IonTabButton, IonIcon, IonPage },
+
   setup() {
     return {
       home,
@@ -39,4 +42,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style>
+.tab-selected {
+  color: white;
+}
+</style>

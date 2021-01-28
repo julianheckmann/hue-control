@@ -2,33 +2,31 @@
   <ion-page>
     <ion-header>
       <ion-toolbar>
-        <ion-title class="settings-header">Settings</ion-title>
+        <ion-title class="settings-header">Einstellungen</ion-title>
       </ion-toolbar>
     </ion-header>
 
-    <ion-content class="ion-padding-vertical">
+    <ion-content>
       <ion-list
-        :key="key"
-        v-for="(setting, key) of settings"
-        class="ion-margin-bottom"
-        :inset="true"
+          :key="key"
+          v-for="(setting, key) of settings"
+          class="ion-margin-bottom settings-container"
+          :inset="true"
       >
-        <ion-list-header translucent>
+        <ion-list-header translucent class="settings-section-header font-semibold">
           {{ setting.name }}
         </ion-list-header>
 
         <ion-item
-          :key="innerKey"
-          v-for="(option, innerKey) of setting.children"
+            :key="innerKey"
+            v-for="(option, innerKey) of setting.children"
         >
           <ion-item @click="redirect(option.link)">
-            <ion-avatar slot="start">
-              <ion-icon :icon="option.icon" />
-            </ion-avatar>
-            <ion-label>
-              <h2>{{ option.name }}</h2>
-              <p>{{ option.description }}</p>
-            </ion-label>
+            <ion-icon :icon="option.icon" class="mr-8 text-white"/>
+            <div class="py-4">
+              <h2 class="text-xs font-semibold">{{ option.name }}</h2>
+              <p class="text-xs text-gray-300">{{ option.description }}</p>
+            </div>
           </ion-item>
         </ion-item>
       </ion-list>
@@ -37,7 +35,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import {defineComponent} from "vue";
+// import ColorConverter from "../../services/ColorConverter.ts";
+
 import {
   IonContent,
   IonHeader,
@@ -47,13 +47,11 @@ import {
   IonList,
   IonItem,
   IonListHeader,
-  IonLabel,
   IonIcon,
-  IonAvatar
 } from "@ionic/vue";
-import { bulb, cube, keypad, informationCircle } from "ionicons/icons";
+import {bulb, cube, keypad, informationCircle} from "ionicons/icons";
 
-import { useRouter } from "vue-router";
+import {useRouter} from "vue-router";
 
 export default defineComponent({
   name: "Settings",
@@ -66,10 +64,8 @@ export default defineComponent({
     IonToolbar,
     IonList,
     IonItem,
-    IonLabel,
     IonListHeader,
     IonIcon,
-    IonAvatar
   },
 
   setup() {
@@ -111,7 +107,7 @@ export default defineComponent({
       }
     };
 
-    const redirect = url => {
+    const redirect = (url: string) => {
       router.replace(url);
     };
 
@@ -123,8 +119,19 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
+<style>
 .settings-header {
   font-size: 15px;
+}
+
+.settings-container {
+  @apply bg-transparent;
+  margin-right: 0 !important;
+  margin-left: 0 !important;
+}
+
+.settings-section-header {
+  @apply text-gray-400;
+  font-size: 12px;
 }
 </style>

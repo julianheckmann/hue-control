@@ -14,9 +14,14 @@
     "@capacitor/core": "2.4.5",
     "@ionic/vue": "^5.4.0",
     "@ionic/vue-router": "^5.4.0",
+    "autoprefixer": "^9.8.6",
     "core-js": "^3.6.5",
+    "eslint": "^7.18.0",
+    "postcss": "^7.0.35",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.2",
     "vue": "^3.0.0-0",
-    "vue-router": "^4.0.0-0"
+    "vue-router": "^4.0.0-0",
+    "vuex": "^4.0.0-rc.2"
   },
   "devDependencies": {
     "@capacitor/cli": "2.4.5",

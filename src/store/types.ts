@@ -1,0 +1,5 @@
+export const SET_LIGHTS_MUTATION = 'SET_LIGHTS';
+export const SET_LIGHTS_ACTION = 'SET_LIGHTS';
+
+export const SET_ROOM_MUTATION = 'SET_ROOMS';
+export const SET_ROOM_ACTION = 'SET_ROOMS';
