@@ -8,7 +8,7 @@
 import {IonApp, IonRouterOutlet} from '@ionic/vue';
 import {useStore} from "vuex";
 import {defineComponent, onBeforeMount, onMounted} from 'vue';
-import {SET_LIGHTS_ACTION, SET_ROOM_ACTION} from "@/store/types";
+import {SET_APP_INFO_ACTION, SET_LIGHTS_ACTION, SET_ROOM_ACTION} from "@/store/types";
 
 export default defineComponent({
   name: 'App',
@@ -33,6 +33,9 @@ export default defineComponent({
       const groups = await fetch('./groups.json', options);
       const groupsJson = await groups.json();
 
+      const infos = await fetch('./infos/AppInfo.json', options);
+      const infosJson = await infos.json();
+
       let buildGroup = {};
 
       for (const group of groupsJson.groups) {
@@ -43,10 +46,11 @@ export default defineComponent({
 
       await store.dispatch(SET_LIGHTS_ACTION, lightsJson);
       await store.dispatch(SET_ROOM_ACTION, buildGroup);
+      await store.dispatch(SET_APP_INFO_ACTION, infosJson)
     })
 
     onMounted(() => {
-      console.log(store.state);
+      // console.log(store.state);
     })
   }
 });

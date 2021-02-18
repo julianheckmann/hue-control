@@ -38,7 +38,7 @@
 </template>
 
 <script lang="ts">
-import HueIconMapper from "../../services/HueIconMapper.ts";
+import HueIconMapper from "../../services/HueIconMapper";
 import {useStore} from "vuex";
 import {defineComponent} from "vue";
 
@@ -57,6 +57,7 @@ import {
 } from "@ionic/vue";
 
 import {powerOutline} from "ionicons/icons";
+import HueIconConfiguration from "@/config/HueIconConfiguration";
 
 
 export default defineComponent({
@@ -77,7 +78,7 @@ export default defineComponent({
   },
 
   setup() {
-    const iconMapper = new HueIconMapper();
+    const iconMapper = new HueIconMapper(HueIconConfiguration, "Other");
     const store = useStore();
 
     const mapIcon = (icon: string) => iconMapper.map(icon);
@@ -89,7 +90,7 @@ export default defineComponent({
       }
     };
 
-    const updateRoom = (room, type, value) => {
+    const updateRoom = (room: any, type: any, value: any) => {
 
       switch (type) {
         case 'state':

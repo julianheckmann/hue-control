@@ -14,8 +14,9 @@
       "reachable": true
     },
     "type": "Extended color light",
-    "name": "not so fancy name of lamp 1",
-    "modelid": "LCT007"
+    "name": "fancy name of lamp 1",
+    "modelid": "LCT007",
+    "version":"1233"
   },
   "2": {
     "state": {
@@ -32,7 +33,8 @@
       "reachable": true
     },
     "type": "Extended color light",
-    "name": "not so fancy name of lamp 2",
-    "modelid": "LCT00744"
+    "name": "fancy name of lamp 2",
+    "modelid": "LCT00744",
+    "version":"444"
   }
 }

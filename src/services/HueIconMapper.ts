@@ -1,22 +1,35 @@
-import {tvOutline, cafeOutline, beerOutline, bedOutline, businessOutline, filterOutline} from "ionicons/icons";
+import IconMap from "@/types/IconMap";
 
 export default class HueIconMapper {
-    private readonly _map: { Office: string; Kitchen: string; "Living room": string; Bedroom: string; Dining: string; Other: string };
+    /**
+     * Icon Map
+     * @private
+     */
+    private readonly _map: IconMap;
+
+    /**
+     * Default Icon
+     *
+     * @private
+     */
     private readonly _default: string;
 
-    constructor() {
-        this._map = {
-            "Living room": tvOutline,
-            "Kitchen": cafeOutline,
-            "Dining": beerOutline,
-            "Bedroom": bedOutline,
-            "Office": businessOutline,
-            "Other": filterOutline
-        };
-
-        this._default = this._map["Other"];
+    /**
+     * HueIconMapper constructor
+     *
+     * @param map
+     * @param defaultIcon
+     */
+    constructor(map: IconMap, defaultIcon: string) {
+        this._map = map;
+        this._default = this._map[defaultIcon];
     }
 
+    /**
+     * Map Icon
+     *
+     * @param hueIcon
+     */
     public map(hueIcon: string) {
         let result = this._map[hueIcon];
 
