@@ -6,3 +6,6 @@ export const SET_ROOM_ACTION = 'SET_ROOMS';
 
 export const SET_APP_INFO_MUTATION = 'SET_APP_INFO';
 export const SET_APP_INFO_ACTION = 'SET_APP_INFO';
+
+export const SET_BRIDGE_MUTATION = 'SET_BRIDGE';
+export const SET_BRIDGE_ACTION = 'SET_BRIDGE';

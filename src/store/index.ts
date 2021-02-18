@@ -5,8 +5,12 @@ import {
     SET_LIGHTS_ACTION,
     SET_ROOM_MUTATION,
     SET_ROOM_ACTION,
-    SET_APP_INFO_MUTATION, SET_APP_INFO_ACTION
+    SET_APP_INFO_MUTATION, SET_APP_INFO_ACTION, SET_BRIDGE_MUTATION, SET_BRIDGE_ACTION
 } from "@/store/types";
+
+import StorageService from "@/services/StorageService";
+
+const storageService = new StorageService();
 
 const store = createStore({
     state() {
@@ -14,6 +18,7 @@ const store = createStore({
             lights: {},
             room: {},
             appInfo: {},
+            bridge: storageService.getBridge() ?? ''
         }
     },
     mutations: {
@@ -25,6 +30,9 @@ const store = createStore({
         },
         [SET_APP_INFO_MUTATION](state, payload) {
             state.appInfo = payload;
+        },
+        [SET_BRIDGE_MUTATION](state, payload) {
+            state.bridge = payload;
         }
     },
     actions: {
@@ -35,7 +43,11 @@ const store = createStore({
             context.commit(SET_ROOM_MUTATION, payload);
         },
         [SET_APP_INFO_ACTION](context, payload) {
-            context.commit(SET_APP_INFO_MUTATION, payload)
+            context.commit(SET_APP_INFO_MUTATION, payload);
+        },
+        async [SET_BRIDGE_ACTION](context, payload) {
+            await context.commit(SET_BRIDGE_MUTATION, payload);
+            await storageService.setBridge(payload);
         }
     }
 })
