@@ -5,7 +5,12 @@ import {
     SET_LIGHTS_ACTION,
     SET_ROOM_MUTATION,
     SET_ROOM_ACTION,
-    SET_APP_INFO_MUTATION, SET_APP_INFO_ACTION, SET_BRIDGE_MUTATION, SET_BRIDGE_ACTION
+    SET_APP_INFO_MUTATION,
+    SET_APP_INFO_ACTION,
+    SET_BRIDGE_MUTATION,
+    SET_BRIDGE_ACTION,
+    SET_USER_ACTION,
+    SET_USER_MUTATION, INFOS_ARE_SET
 } from "@/store/types";
 
 import StorageService from "@/services/StorageService";
@@ -18,8 +23,14 @@ const store = createStore({
             lights: {},
             room: {},
             appInfo: {},
-            bridge: storageService.getBridge() ?? ''
+            bridge: storageService.getBridge() ?? '',
+            user: storageService.getUser() ?? ''
         }
+    },
+    getters: {
+      [INFOS_ARE_SET](state) {
+          return state.bridge.length < 0 || state.user.length < 0;
+      }
     },
     mutations: {
         [SET_LIGHTS_MUTATION](state, payload) {
@@ -33,6 +44,9 @@ const store = createStore({
         },
         [SET_BRIDGE_MUTATION](state, payload) {
             state.bridge = payload;
+        },
+        [SET_USER_MUTATION](state, payload) {
+            state.user = payload;
         }
     },
     actions: {
@@ -48,6 +62,10 @@ const store = createStore({
         async [SET_BRIDGE_ACTION](context, payload) {
             await context.commit(SET_BRIDGE_MUTATION, payload);
             await storageService.setBridge(payload);
+        },
+        async [SET_USER_ACTION](context, payload) {
+            await context.commit(SET_USER_MUTATION, payload);
+            await storageService.setUser(payload);
         }
     }
 })

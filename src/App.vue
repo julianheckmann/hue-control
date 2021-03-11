@@ -7,8 +7,10 @@
 <script lang="ts">
 import {IonApp, IonRouterOutlet} from '@ionic/vue';
 import {useStore} from "vuex";
-import {defineComponent, onBeforeMount, onMounted} from 'vue';
+import {useRouter} from "vue-router";
+import {defineComponent, onBeforeMount, onMounted, provide} from 'vue';
 import {SET_APP_INFO_ACTION, SET_LIGHTS_ACTION, SET_ROOM_ACTION} from "@/store/types";
+import BridgeService from "@/services/BridgeService";
 
 export default defineComponent({
   name: 'App',
@@ -18,35 +20,20 @@ export default defineComponent({
   },
   setup() {
     const store = useStore();
+    const router = useRouter();
 
     onBeforeMount(async () => {
-      const options = {
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        }
+      const user = await store.state.user;
+      const bridge = await store.state.bridge;
+
+      if (!user || !bridge) {
+        await router.push('/config/bridge/')
+        return;
       }
 
-      const lights = await fetch('./lights.json', options);
-      const lightsJson = await lights.json();
-
-      const groups = await fetch('./groups.json', options);
-      const groupsJson = await groups.json();
-
-      const infos = await fetch('./infos/AppInfo.json', options);
-      const infosJson = await infos.json();
-
-      let buildGroup = {};
-
-      for (const group of groupsJson.groups) {
-        const groupContent = await fetch(`./groups/${group}.json`, options);
-        const groupContentJson = await groupContent.json();
-        buildGroup = {...buildGroup, ...{[group]: groupContentJson}};
-      }
-
-      await store.dispatch(SET_LIGHTS_ACTION, lightsJson);
-      await store.dispatch(SET_ROOM_ACTION, buildGroup);
-      await store.dispatch(SET_APP_INFO_ACTION, infosJson)
+      const bridgeService = new BridgeService(bridge, user, store);
+      provide('bridgeService', bridgeService);
+      await bridgeService.fetchAllAndDispatchToStore()
     })
 
     onMounted(() => {

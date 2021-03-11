@@ -10,6 +10,13 @@ export default class StorageService {
     private _bridgeKey = 'bridge';
 
     /**
+     * User Key
+     *
+     * @private
+     */
+    private _userKey = 'user';
+
+    /**
      * Capacitor local storage adaptor
      *
      * @private
@@ -30,16 +37,50 @@ export default class StorageService {
      * @return string|null
      */
     public async getBridge(): Promise<string | null> {
-        const item = await this._storage.get({key: this._bridgeKey});
-        return item.value;
+        return this._get(this._bridgeKey);
+    }
+
+    public async getUser(): Promise<string | null> {
+        return this._get(this._userKey);
     }
 
     /**
-     *  Store bridge ip in local storage
+     * Store bridge in local storage
      *
      * @param bridgeIp
      */
     public async setBridge(bridgeIp: string): Promise<void> {
-        await this._storage.set({key: this._bridgeKey, value: bridgeIp})
+        await this._set(this._bridgeKey, bridgeIp);
+    }
+
+    /**
+     * Store user in local storage
+     *
+     * @param user
+     */
+    public async setUser(user: string): Promise<void> {
+        await this._set(this._userKey, user);
+    }
+
+    /**
+     * Get Value from Key in local storage
+     *
+     * @param key
+     * @private
+     */
+    private async _get(key: string): Promise<string | null> {
+        const item = await this._storage.get({key: key});
+        return item.value;
+    }
+
+    /**
+     * Set Key Value in local storage
+     *
+     * @param key
+     * @param value
+     * @private
+     */
+    private async _set(key: string, value: string): Promise<void> {
+        await this._storage.set({key: key, value: value})
     }
 }

@@ -8,7 +8,15 @@
           v-model="bridgeIp">
       </ion-input>
 
-      <ion-button :disabled="!bridgeIp.length" class="mt-4 capitalize" color="light" expand="block" @click="saveBridge">
+      <ion-input
+          class=" my-4 border border-gray-700 rounded border-gray-400+"
+          clear-input
+          placeholder="Enter Bridge User"
+          v-model="userName">
+      </ion-input>
+
+      <ion-button :disabled="!bridgeIp.length || !userName.length" class="mt-4 capitalize" color="light" expand="block"
+                  @click="save">
         Speichern
       </ion-button>
     </div>
@@ -20,7 +28,7 @@ import {defineComponent, onBeforeMount, ref} from "vue";
 import {useStore} from "vuex";
 import SubpageLayout from "../../../layouts/SubpageLayout";
 import {IonInput, IonButton, toastController} from "@ionic/vue"
-import {SET_BRIDGE_ACTION} from "../../../store/types";
+import {SET_BRIDGE_ACTION, SET_USER_ACTION} from "../../../store/types";
 
 export default defineComponent({
   name: "Bridge",
@@ -28,6 +36,7 @@ export default defineComponent({
   setup() {
     const store = useStore();
     const bridgeIp = ref('');
+    const userName = ref('');
 
     const successToast = async () => {
       const toast = await toastController.create({
@@ -48,9 +57,11 @@ export default defineComponent({
       return toast.present();
     }
 
-    const saveBridge = async () => {
-      if (bridgeIp.value.length) {
+    const save = async () => {
+      if (bridgeIp.value.length || userName.value.length) {
         await store.dispatch(SET_BRIDGE_ACTION, bridgeIp.value);
+        await store.dispatch(SET_USER_ACTION, userName.value);
+
         await successToast()
       } else {
         await failedToast();
@@ -59,13 +70,18 @@ export default defineComponent({
 
     onBeforeMount(async () => {
       const bridge = await store.state.bridge;
+      const user = await store.state.user;
 
-      if (bridge.length) {
+      if (bridge) {
         bridgeIp.value = bridge;
+      }
+
+      if (user) {
+        userName.value = user;
       }
     })
 
-    return {saveBridge, bridgeIp}
+    return {save, bridgeIp, userName}
   }
 });
 </script>

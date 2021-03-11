@@ -9,3 +9,8 @@ export const SET_APP_INFO_ACTION = 'SET_APP_INFO';
 
 export const SET_BRIDGE_MUTATION = 'SET_BRIDGE';
 export const SET_BRIDGE_ACTION = 'SET_BRIDGE';
+
+export const SET_USER_MUTATION = 'SET_USER';
+export const SET_USER_ACTION = 'SET_USER';
+
+export const INFOS_ARE_SET = 'INFOS_ARE_SET';
