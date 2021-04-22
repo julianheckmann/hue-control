@@ -3,7 +3,7 @@
     <ion-content>
       <div class="mx-5">
         <h2 class="font-semibold text-md">Hue</h2>
-        <h3 class="text-xs font-medium">Version {{ this.$store.state.appInfo.appVersion }}</h3>
+        <h3 class="text-xs font-medium">Version 123</h3>
         <h4 class="text-xs font-medium">© 2021 XYZ. Alle Rechte vorbehalten.</h4>
 
         <ul class="my-5">
