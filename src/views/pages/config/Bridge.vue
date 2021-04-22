@@ -23,12 +23,13 @@
   </subpage-layout>
 </template>
 
-<script>
+<script lang="ts">
 import {defineComponent, onBeforeMount, ref} from "vue";
 import {useStore} from "vuex";
-import SubpageLayout from "../../../layouts/SubpageLayout";
+import SubpageLayout from "../../../layouts/SubpageLayout.vue";
 import {IonInput, IonButton, toastController} from "@ionic/vue"
-import {SET_BRIDGE_ACTION, SET_USER_ACTION} from "../../../store/types";
+import {SET_BRIDGE_ACTION, SET_USER_ACTION} from "@/store/types";
+import BridgeService from '../../../services/BridgeService'
 
 export default defineComponent({
   name: "Bridge",
@@ -37,6 +38,7 @@ export default defineComponent({
     const store = useStore();
     const bridgeIp = ref('');
     const userName = ref('');
+    const bridgeService = new BridgeService(store);
 
     const successToast = async () => {
       const toast = await toastController.create({
@@ -58,11 +60,21 @@ export default defineComponent({
     }
 
     const save = async () => {
-      if (bridgeIp.value.length || userName.value.length) {
-        await store.dispatch(SET_BRIDGE_ACTION, bridgeIp.value);
-        await store.dispatch(SET_USER_ACTION, userName.value);
+      if (bridgeService && (bridgeIp.value.length || userName.value.length)) {
+        console.log(bridgeIp, userName)
+        const valid = await bridgeService.validateBridgeInfo(bridgeIp.value, userName.value);
 
-        await successToast()
+        if (valid) {
+          await store.dispatch(SET_BRIDGE_ACTION, bridgeIp.value);
+          await store.dispatch(SET_USER_ACTION, userName.value);
+
+          await bridgeService.fetchAllAndDispatchToStore()
+
+          await successToast();
+        } else {
+          await failedToast();
+        }
+
       } else {
         await failedToast();
       }

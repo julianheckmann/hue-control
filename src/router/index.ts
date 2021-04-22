@@ -65,8 +65,11 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
     const state = !store.getters[INFOS_ARE_SET];
 
-    if (to.name !== 'Bridge' && state) next({name: 'Bridge'});
-    else next();
+    if (state) {
+        next();
+    } else {
+        next({name: 'Bridge'})
+    }
 })
 
 export default router;

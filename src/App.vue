@@ -8,8 +8,7 @@
 import {IonApp, IonRouterOutlet} from '@ionic/vue';
 import {useStore} from "vuex";
 import {useRouter} from "vue-router";
-import {defineComponent, onBeforeMount, onMounted, provide} from 'vue';
-import {SET_APP_INFO_ACTION, SET_LIGHTS_ACTION, SET_ROOM_ACTION} from "@/store/types";
+import {defineComponent, onBeforeMount, onMounted} from 'vue';
 import BridgeService from "@/services/BridgeService";
 
 export default defineComponent({
@@ -31,8 +30,7 @@ export default defineComponent({
         return;
       }
 
-      const bridgeService = new BridgeService(bridge, user, store);
-      provide('bridgeService', bridgeService);
+      const bridgeService = new BridgeService(store);
       await bridgeService.fetchAllAndDispatchToStore()
     })
 
