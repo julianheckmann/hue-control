@@ -23,6 +23,20 @@ export default class BridgeService {
 		return await response.json();
 	}
 	
+	public async fetchLightForRoom(id) {
+		const user = await this._getUser();
+		const bridge = await this._getBridge();
+		
+		const response = await fetch(`http://${bridge}/${user}/lights/${id}`, {
+			method: 'GET', cache: 'no-cache', mode: "cors", headers: {
+				'Accept': 'application/json',
+				'Access-Control-Allow-Origin': '*',
+				'Content-Type': 'application/json',
+			}
+		})
+		return await response.json();
+	}
+	
 	public async fetchGroups() {
 		const user = await this._getUser();
 		const bridge = await this._getBridge();
@@ -96,6 +110,24 @@ export default class BridgeService {
 		}
 		
 		return buildGroup;
+	}
+	
+	public async updateGroup(groupId, value): Promise<void> {
+		const user = await this._getUser();
+		const bridge = await this._getBridge();
+		
+		const response = await fetch(`http://${bridge}/${user}/groups/${groupId}/action`, {
+			method: 'PUT', cache: 'no-cache', mode: "cors", headers: {
+				'Accept': 'application/json',
+				'Access-Control-Allow-Origin': '*',
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({on: value})
+		});
+		
+		if (!response.ok) {
+			throw new DOMException('request failed');
+		}
 	}
 	
 	

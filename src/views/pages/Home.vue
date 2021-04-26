@@ -4,7 +4,7 @@
       <ion-toolbar>
         <ion-buttons slot="secondary">
           <ion-button @click="turnOffAllLights">
-            test
+            All
             <ion-icon :name="powerOutline"></ion-icon>
           </ion-button>
         </ion-buttons>
@@ -19,16 +19,16 @@
 
         <ion-item :key="index" v-for="(room, index) of this.$store.state.room"
                   class="home-container-list-item mb-4 mx-4 rounded">
-          <div class="w-full flex flex-wrap py-4 items-center">
-            <div class="w-1/12 text-center flex items-center justify-center">
+          <div class="w-full flex flex-wrap py-4 items-center cursor-pointer">
+            <div class="w-1/12 text-center flex items-center justify-center" @click="redirect({path: '/pages/room/' + index })">
               <ion-icon size="large" :icon="mapIcon(room.class)"></ion-icon>
             </div>
 
-            <div class="w-8/12 pl-4 flex items-center">
+            <div class="w-8/12 pl-4 flex items-center" @click="redirect({path: '/pages/room/' + index })">
               <h2 class="text-sm font-semibold"> {{ room.name }}</h2>
             </div>
 
-            <div class="w-3/12 text-right">
+            <div class="w-3/12 text-right" @click.prevent>
               <ion-toggle @update:modelValue="updateRoom(index, 'state', $event)" :modelValue="room.action.on"/>
             </div>
           </div>
@@ -59,6 +59,8 @@ import {
 
 import {powerOutline} from "ionicons/icons";
 import HueIconConfiguration from "@/config/HueIconConfiguration";
+import BridgeService from "@/services/BridgeService";
+import {useRouter} from "vue-router";
 
 export default defineComponent({
   name: "Home",
@@ -80,6 +82,7 @@ export default defineComponent({
   setup() {
     const iconMapper = new HueIconMapper(HueIconConfiguration, "Other");
     const store = useStore();
+    const router = useRouter();
 
     const mapIcon = (icon: string) => iconMapper.map(icon);
 
@@ -91,18 +94,23 @@ export default defineComponent({
       }
     };
 
-    const updateRoom = (room: any, type: any, value: any) => {
-
+    const updateRoom = async (room: any, type: any, value: any) => {
+      const bridgeService = new BridgeService(store);
       switch (type) {
         case 'state':
+          await bridgeService.updateGroup(room, value);
           console.log(`/root/groups/${room}/action`, {on: value})
           break;
       }
     }
 
+    const redirect = (route) => {
+      router.push(route);
+    }
+
     // console.log(ColorConverter.rgbToXy(6, 255, 245));
 
-    return {updateRoom, mapIcon, turnOffAllLights, powerOutline};
+    return {updateRoom, mapIcon, turnOffAllLights, powerOutline, redirect};
   }
 });
 </script>
@@ -111,7 +119,7 @@ export default defineComponent({
 .home-container {
   @apply bg-transparent;
   margin-right: 0 !important;
-  margin-left: 0 !important;
+  margin-left:  0 !important;
 }
 
 .home-container-list-item {
