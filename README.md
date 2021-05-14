@@ -40,3 +40,9 @@ The Port is listed in the given docker-compose file or if you run
 docker ps
 ```
 Afterwards search for the Dummy API Container and the exposed port is listed underneath the Port section. 
+
+
+The default user of the dummy API is:
+```
+root
+```
