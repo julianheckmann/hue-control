@@ -31,3 +31,12 @@ Requires Android Studio and the Android SDK. You find more Information here: htt
 
 ### IOS
 Currently not officially supported, but you might try it out. You find more Information here: https://ionicframework.com/docs/developing/ios
+
+## Configure the dummy API
+You need to enter the Address of the Dummy API in the configuration page of the App.
+
+The Port is listed in the given docker-compose file or if you run
+```bash
+docker ps
+```
+Afterwards search for the Dummy API Container and the exposed port is listed underneath the Port section. 
